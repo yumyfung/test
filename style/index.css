@@ -1,0 +1,12 @@
+@import url("mod_reset.import.css");
+html,body{height:100%;}
+.page{position:relative;height:100%;}
+.page_index{background:url(img/bg1.jpg) no-repeat center top;background-size:cover;}
+.hand{position:absolute;left:0;bottom:0;width:7.5rem;height:3.66rem;background:url(img/hand.png) no-repeat;background-size:cover;}
+.hand.play{-webkit-animation:shake .8s ease infinite;}
+.hand_cover{position:absolute;left:0;bottom:0;width:7.5rem;height:2.18rem;background:url(img/hand_cover.png) no-repeat;background-size:cover;}
+
+@-webkit-keyframes shake{
+	0%{-webkit-transform:rotate(-10deg);}
+	100%{-webkit-transform:rotate(10deg);}
+}

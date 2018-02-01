@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0,viewport-fit=cover" />
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="Content-Language" content="zh-cn" />
+    <meta name="Copyright" content="" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta name="applicable-device" content="mobile">
+    <link rel="stylesheet" href="style/index.css" />
+    <script type="text/javascript">
+        (function (win,doc,flag){
+            if (!win.addEventListener) return;
+            var resizeEvt = 'orientationchange' in win ? 'orientationchange' : 'resize';
+            function setFont(){
+                switch(flag){
+                    case 'height':
+                        var flagValue=window.innerHeight||567;
+                        if (!flagValue) return;
+                        document.documentElement.style.fontSize=100*(flagValue/1134)+'px';  
+                        break;
+                    default:
+                        var flagValue=window.innerWidth||375;
+                        if (!flagValue) return;
+                        document.documentElement.style.fontSize=100*(flagValue/720)+'px';  
+                }
+                  
+            }  
+            if (!doc.addEventListener) return;
+            win.addEventListener(resizeEvt, setFont, false);
+            setFont();
+        })(window,document,'width'); // 如果要按高度来改变字体大小，将'width'换成height'
+    </script>
+</head>
+<body>
+    <div class="page page_index">
+        <div class="hand"></div>
+        <div class="hand_cover"></div>
+    </div>
+
+
+
+</body>
+<script type="text/javascript" src="js/zepto.min.js"></script>
+<script type="text/javascript">
+    $(function(){
+
+        var shake = 2500,
+        last_update = 0,
+        shake_flag = 0,
+        x = y = z = last_x = last_y = last_z = 0;
+
+        function deviceMotionHandler(eventData) {
+            $('.hand').addClass('play');
+            if(shake_flag == 0){ 
+                var acceleration = eventData.accelerationIncludingGravity,
+                currTime = new Date().valueOf(),
+                diffTime = currTime - last_update;
+                if (diffTime > 100) {
+                    last_update = currTime;
+                    x = acceleration.x;
+                    y = acceleration.y;
+                    z = acceleration.z;
+                    var speed = Math.abs(x + y + z - last_x - last_y - last_z) / diffTime * 10000;
+                    if (speed > shake) {
+                        shake_flag = 10;
+                        sleep(1000);//注意一定要sleep一下，要不然反应太快，还没响就结束了
+                        //这里写您的操作
+                        $('.hand').removeClass('play');
+                        shake_flag = 0;
+                    }
+                    last_x = x;
+                    last_y = y;
+                    last_z = z;
+                }
+            }
+        }
+
+        function sleep(numberMillis) {
+            var now = new Date();
+            var exitTime = now.getTime() + numberMillis;
+            while (true) {
+                now = new Date();
+                if (now.getTime() > exitTime)
+                return;
+            }
+        }
+
+        if (window.DeviceMotionEvent) {
+            window.addEventListener("devicemotion", deviceMotionHandler, false);
+        } else {
+        //不支持摇一摇功能的支持
+        }
+
+    });
+</script>
+</html>
