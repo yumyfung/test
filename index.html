@@ -46,50 +46,101 @@
 </body>
 <script type="text/javascript" src="js/zepto.min.js"></script>
 <script type="text/javascript">
+    // $(function(){
+
+    //     var shake = 2500,
+    //     last_update = 0,
+    //     shake_flag = 0,
+    //     x = y = z = last_x = last_y = last_z = 0;
+
+    //     function deviceMotionHandler(eventData) {
+    //         if(shake_flag == 0){ 
+    //             var acceleration = eventData.accelerationIncludingGravity,
+    //             currTime = new Date().valueOf(),
+    //             diffTime = currTime - last_update;
+    //             if (diffTime > 100) {
+    //         $('.hand').addClass('play');
+    //                 last_update = currTime;
+    //                 x = acceleration.x;
+    //                 y = acceleration.y;
+    //                 z = acceleration.z;
+    //                 var speed = Math.abs(x + y + z - last_x - last_y - last_z) / diffTime * 10000;
+    //                 if (speed > shake) {
+    //                     shake_flag = 10;
+    //                     sleep(1000);//注意一定要sleep一下，要不然反应太快，还没响就结束了
+    //                     //这里写您的操作
+    //                     $('.hand').removeClass('play');
+    //                     shake_flag = 0;
+    //                 }
+    //                 last_x = x;
+    //                 last_y = y;
+    //                 last_z = z;
+    //             }
+    //         }
+    //     }
+
+    //     function sleep(numberMillis) {
+    //         var now = new Date();
+    //         var exitTime = now.getTime() + numberMillis;
+    //         while (true) {
+    //             now = new Date();
+    //             if (now.getTime() > exitTime)
+    //             return;
+    //         }
+    //     }
+
+    //     if (window.DeviceMotionEvent) {
+    //         window.addEventListener("devicemotion", function(eventData){deviceMotionHandler(eventData)}, false);
+    //     } else {
+    //     //不支持摇一摇功能的支持
+    //     }
+
+    // });
+</script>
+
+
+<script type="text/javascript">
+
 $(function(){
 
-        var shake = (function(){
-            var speed = 25; //摇一摇速度的临界值
-            var x = y = z = lastX = lastY = lastZ = 0;
-            var isShaking = false; //是否在动画中
-            return function init(callback){
-                if(window.DeviceMotionEvent){
-                    window.addEventListener('devicemotion', function(){deviceMotionHandler(callback);}, false)
-                }else{
-                    alert("not support mobile motion event");
-                }
-            }
 
-            function deviceMotionHandler(callback){
-            /*获取x,y,z方向的即时速度*/
-            var acceleration = event.accelerationIncludingGravity;
-            x = acceleration.x;y = acceleration.y;z = acceleration.z;
-            if(Math.abs(x-lastX) > speed || Math.abs(y-lastY) > speed || Math.abs(z-lastZ) > speed){
-                if(!isShaking){
-                    //手机震动一秒
-                    if (navigator.vibrate) {
-                        navigator.vibrate(1000);
-                    }else if (navigator.webkitVibrate) {
-                        navigator.webkitVibrate(1000);
-                    }else if(navigator.mozVibrate){
-                        navigator.mozVibrate(1000);
-                    }
-                }else if(navigator.msVibrate){
-                    navigator.msVibrate(1000);
-                }
-                isShaking = true;
-                $('.hand').addClass('play');
-                setTimeout(function(){
-                    callback();
-                    isShaking = false;
+    //首先定义一下，全局变量
+    var lastTime = 0;//此变量用来记录上次摇动的时间
+    var x = y = z = lastX = lastY = lastZ = 0;//此组变量分别记录对应x、y、z三轴的数值和上次的数值
+    var shakeSpeed = 800;//设置阈值
+    //编写摇一摇方法
+    function shake(eventDate){
+        $('.hand').addClass('play');
+        var acceleration = eventDate.accelerationIncludingGravity;//获取设备加速度信息
+        var nowTime = new Date().getTime();//记录当前时间
+        //如果这次摇的时间距离上次摇的时间有一定间隔 才执行
+        if(nowTime - lastTime > 100){
+            var diffTime = nowTime - lastTime;//记录时间段
+            lastTime = nowTime;//记录本次摇动时间，为下次计算摇动时间做准备
+            x = acceleration.x;//获取x轴数值，x轴为垂直于北轴，向东为正
+            y = acceleration.y;//获取y轴数值，y轴向正北为正
+            z = acceleration.z;//获取z轴数值，z轴垂直于地面，向上为正
+            //计算 公式的意思是 单位时间内运动的路程，即为我们想要的速度
+            var speed = Math.abs(x + y + z - lastX - lastY - lastZ) / diffTime * 10000;
+            if(speed > shakeSpeed){//如果计算出来的速度超过了阈值，那么就算作用户成功摇一摇
+                    //这里就是放置如果用户成功的摇一摇，将要触发的事件，例如提示摇到了谁，摇到了多少金币等等
                     $('.hand').removeClass('play');
-                },2000);
             }
-            lastX = x;lastY = y;lastZ = z;
-        }
-    }());
+            lastX = x;//赋值，为下一次计算做准备
+            lastY = y;//赋值，为下一次计算做准备
+            lastZ = z;//赋值，为下一次计算做准备
+    }
+    }
 
-});
+    if(window.DeviceMotionEvent){//判断设备是否支持运动传感事件。
+            window.addEventListener('devicemotion', shake, false);//如果支持，那么就绑定shake方法到事件上
+    }else{
+            alert('本设备不支持摇一摇功能');//如果不支持，提示即可
+    }
+
+
+})
 
 </script>
+
 </html>
