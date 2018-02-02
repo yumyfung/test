@@ -49,6 +49,8 @@
     </div>
 
     <div class="page page_flag"></div>
+
+    <div class="page page_ask"><div class="ask"></div></div>
         
 </body>
 <script type="text/javascript" src="js/zepto.min.js"></script>
@@ -124,8 +126,12 @@ $(function(){
             if(speed > shakeSpeed){//如果计算出来的速度超过了阈值，那么就算作用户成功摇一摇
                 //这里就是放置如果用户成功的摇一摇，将要触发的事件，例如提示摇到了谁，摇到了多少金币等等
                 $('.page_index').hide();
-                $('.page_flag').addClass('play');
-                $('.page_res').addClass('play');
+                setTimeOut(function(){
+                    $('.page_ask').hide();
+                    $('.page_flag').addClass('play');
+                    $('.page_res').addClass('play');
+                }, 2000);
+                
             }
             lastX = x;//赋值，为下一次计算做准备
             lastY = y;//赋值，为下一次计算做准备
