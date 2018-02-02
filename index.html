@@ -127,8 +127,8 @@ $(function(){
                 //https://github.com/hongru/canvas2image/blob/master/canvas2image.js
                 $('body').append(canvas);
                 var img = Canvas2Image.convertToImage(canvas, canvas.width, canvas.height);
-                $(img).addClass="res_show_img";
-                $('.page_res').html($(img));
+                img.className +="res_show_img";
+                $('.page_res').html(img);
             });
         }
     };
