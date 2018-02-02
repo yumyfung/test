@@ -46,8 +46,9 @@
             <img class="res__user" src="style/img/1.jpg"/>
             <div class="res__tips">沸羊羊的新年变化关键词：</div>
         </div>
-        <div class="res_img" id="resImg"></div>
     </div>
+        
+    <div class="page res_img" id="resImg"></div>
 
 </body>
 <script type="text/javascript" src="js/zepto.min.js"></script>
@@ -127,7 +128,7 @@ $(function(){
                 // console.dir(canvas);
                 //如果想要生成图片 引入canvas2Image.js 下载地址：
                 //https://github.com/hongru/canvas2image/blob/master/canvas2image.js
-                // $('body').append(canvas);
+                $('body').append(canvas);
                 var img = Canvas2Image.convertToImage(canvas, canvas.width, canvas.height);
                 $('#resImg').append(img);
             });
