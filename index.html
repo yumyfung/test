@@ -125,7 +125,6 @@ $(function(){
                 // console.dir(canvas);
                 //如果想要生成图片 引入canvas2Image.js 下载地址：
                 //https://github.com/hongru/canvas2image/blob/master/canvas2image.js
-                $('body').append(canvas);
                 var img = Canvas2Image.convertToImage(canvas, canvas.width, canvas.height);
                 var imgObj = $(img);
                 $(imgObj).addClass("res_show_img");
