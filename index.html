@@ -109,9 +109,8 @@ $(function(){
 
             var canvas = document.createElement('canvas');  //创建canvas 对象
             var context = canvas.getContext('2d');
-            canvas.width = width * scaleBy;   //这里 由于绘制的dom 为固定宽度，居中，所以没有偏移
-            canvas.height = (height + offsetTop) * scaleBy;  // 注意高度问题，由于顶部有个距离所以要加上顶部的距离，解决图像高度偏移问题
-            context.scale(scaleBy, scaleBy);
+            canvas.width = width;   //这里 由于绘制的dom 为固定宽度，居中，所以没有偏移
+            canvas.height = (height + offsetTop);  // 注意高度问题，由于顶部有个距离所以要加上顶部的距离，解决图像高度偏移问题
 
             var opts = {
                 allowTaint:true,//允许加载跨域的图片
@@ -126,8 +125,8 @@ $(function(){
                 // console.dir(canvas);
                 //如果想要生成图片 引入canvas2Image.js 下载地址：
                 //https://github.com/hongru/canvas2image/blob/master/canvas2image.js
-                $('body').append(canvas);
                 var img = Canvas2Image.convertToImage(canvas, canvas.width, canvas.height);
+                $(img).addClass="res_show_img";
                 $('.page_res').html(img);
             });
         }
