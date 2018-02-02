@@ -48,8 +48,6 @@
         </div>
     </div>
         
-    <div class="page res_img" id="resImg"></div>
-
 </body>
 <script type="text/javascript" src="js/zepto.min.js"></script>
 <script src="js/html2canvas.js"></script>
@@ -130,7 +128,7 @@ $(function(){
                 //https://github.com/hongru/canvas2image/blob/master/canvas2image.js
                 $('body').append(canvas);
                 var img = Canvas2Image.convertToImage(canvas, canvas.width, canvas.height);
-                $('#resImg').append(img);
+                $('.page_res').html(img);
             });
         }
     };
