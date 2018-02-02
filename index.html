@@ -57,6 +57,7 @@
 
 <script type="text/javascript">
 //res
+$(function(){
     var screenPicture = {
         //绘制dom 元素，生成截图canvas
         html2Canvas: function () {
@@ -93,6 +94,10 @@
         }
     };
 
+    //最后运行代码
+    screenPicture.html2Canvas();
+
+});
 </script>
 
 <script type="text/javascript">
@@ -121,8 +126,6 @@ $(function(){
                 $('.page_index').hide();
                 $('.page_flag').addClass('play');
                 $('.page_res').addClass('play');
-                //截图
-                screenPicture.html2Canvas();
             }
             lastX = x;//赋值，为下一次计算做准备
             lastY = y;//赋值，为下一次计算做准备
