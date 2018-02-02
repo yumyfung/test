@@ -15,6 +15,8 @@ html,body{height:100%;}
 .res__user{position:absolute;left:1.48rem;bottom:8.8rem;width:2.04rem;height:2.04rem;border-radius:999px;}
 .res__tips{position:absolute;left:3.8rem;bottom:10rem;font-size:0.48rem;color:#3c2613;}
 
+.res_show_img{display:block;width:100%;}
+
 @-webkit-keyframes shake{
 	0%{-webkit-transform:rotate(-10deg);}
 	100%{-webkit-transform:rotate(10deg);}
